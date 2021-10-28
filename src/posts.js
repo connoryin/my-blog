@@ -57,23 +57,32 @@ class Posts extends React.Component {
                     content: this.state.content,
                 })
             })
-            .then(resp => resp.json())
-            .then(data => {
-                this.setState({
-                    posts: data,
-                    show: false,
-                    title: '',
-                    name: '',
-                    content: '',
-                    info: 'Make a post'
-                })
+            .then(async resp => {
+                const data = await resp.text()
+                alert(data)
+                if (data === "success") {
+                    this.setState(prev => {
+                        return {
+                            posts: [...prev.posts, {
+                                title: prev.title,
+                                name: prev.name,
+                                content: prev.content,
+                            }],
+                            show: false,
+                            title: '',
+                            name: '',
+                            content: '',
+                            info: 'Make a post'
+                        }
+                    })
+                }
             })
         event.preventDefault();
     }
 
     show() {
         this.setState(prev => {
-            return {show: !prev.show, info: prev.show ? 'Make a post' : 'Cancel' }
+            return {show: !prev.show, info: prev.show ? 'Make a post' : 'Cancel'}
         })
     }
 
