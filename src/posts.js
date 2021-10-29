@@ -48,8 +48,9 @@ class Posts extends React.Component {
         fetch(`https://worker.connoryin.workers.dev/api/posts`,
             {
                 method: 'POST',
+                credentials: "same-origin",
                 headers: {
-                    'Content-Type': 'application/json; charset=utf-8'
+                    'Content-Type': 'application/json; charset=utf-8',
                 },
                 body: JSON.stringify({
                     title: this.state.title,
@@ -77,6 +78,8 @@ class Posts extends React.Component {
                     })
                 }
             })
+            .catch(error => alert(error.toString()))
+
         event.preventDefault();
     }
 
